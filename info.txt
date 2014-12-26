@@ -1,0 +1,73 @@
+Product type:
+Interactive toy
+
+Materials:
+2mm corrugated cardboard or acrylic, glue, 1x 10K resistor, 1x Servo motor, 20cm electric wire
+
+Production tools:
+Lasercutter or scissors and glue, soldering iron, Arduino software
+
+Description:
+When you squeeze the gorillas hand, he responds by shaking hands with you.
+The Handshake Gorilla is a design for beginner level Arduino workshops.
+The design features a simple touch sensor, a servo powered arm and a gorilla puppet.
+The gorilla can be cut out by hand or with a laser cutter.
+The design is suitable for expanding with more advanced sensors and new animal shapes.
+
+Instructions:
+Cut out the the gorilla parts.
+Insert the servo into the gorillas body.
+Add two electric wires two the gorillas arm, make sure that there is exposed copper at the ends that can make contact when touched (see picture).
+Attach the servo cross to the arm and fix to the servo.
+Glue the left arm to the backside of the servo.
+Wire the cables like shown in the schematic.
+Download the following program to the Arduino and have fun shaking hands with the Gorilla:
+
+#include <Servo.h> 
+ 
+Servo myservo;  // create servo object to control a servo 
+
+const int triggerCable = 2;     // the cinnection port (digital in this case) for the trigger cable
+
+int triggerState = 0;         // variable for reading the status of the trigger cables (connected or not)
+
+int armUp = 90;       //rotation degree of the servo when the arm is up
+int armMid = 45;      //standard position for when the arm is moving
+int armDown = 0;      //rotation degree of the servo when the arm is down
+int armPause = 800;   //the time we allow the servo to rech the instructed position
+
+
+void setup() {
+  
+  pinMode(triggerCable, INPUT);   // initialize the trigger cable pin as an input: 
+  myservo.attach(9);              // attaches the servo on pin 9 to the servo object 
+}
+
+void loop(){
+  // read the state of the trigger cable value:
+  triggerState = digitalRead(triggerCable);
+
+  // check if the pushbutton is pressed.
+  // if it is, the triggerState is HIGH:
+  if (triggerState == HIGH) {     
+    // turn LED on:    
+    myservo.write(armDown);   // tell servo to go to armDown position 
+    delay(armPause);        // tells the program to wait as longs as specified in "armPause", gives the servo time to reach the defined position
+    
+    myservo.write(armUp);   // tell servo to go to armUp position 
+    delay(armPause);        // tells the program to wait as longs as specified in "armPause", gives the servo time to reach the defined position    
+  } 
+  else {
+    // turn LED off:
+    myservo.write(armMid);   // tell servo to go to armMid position 
+  }
+}
+
+
+License:
+Creative Commons Attribution 3.0 Unported License
+
+Designed by:
+Jens Dyvik
+www.dyvikdesign.com
+jens@dyvikdesign.com
